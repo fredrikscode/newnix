@@ -1,10 +1,6 @@
 { config, pkgs, ... }:
 
 {
-
-
-
-  # TODO please change the username & home directory to your own
   home.username = "fredrik";
   home.homeDirectory = "/home/fredrik";
 
@@ -31,56 +27,94 @@
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
-    neofetch
+    hyprland
+    waybar
+    wofi
+    alacritty
 
-    # archives
-    zip
-    xz
-    unzip
-    p7zip
+    # System Monitoring
+    btop                # Resource monitor (replacement for htop/nmon)
+    iotop               # IO monitoring
+    iftop               # Network monitoring
+    strace              # System call monitoring
+    ltrace              # Library call monitoring
+    lsof                # List open files
+    sysstat             # Performance monitoring tools
+    lm_sensors          # Hardware health monitoring (sensors command)
+    pciutils            # Tools for listing and manipulating PCI devices (lspci)
+    usbutils            # USB device listing (lsusb)
 
-    # utils
-    ripgrep # recursively searches directories for a regex pattern
-    jq # A lightweight and flexible command-line JSON processor
-    yq-go # yaml processor https://github.com/mikefarah/yq
-    eza # A modern replacement for ‘ls’
-    fzf # A command-line fuzzy finder
+    # Networking Tools
+    dig                 # DNS lookup utility
+    mtr                 # Network diagnostic tool
+    iperf3              # Network bandwidth measurement tool
+    dnsutils            # DNS utilities (`dig` + `nslookup`)
+    ldns                # DNS utilities replacement (`drill`)
+    aria2               # Multi-protocol & multi-source download utility
+    socat               # Data relay between two addresses
+    nmap                # Network discovery and security auditing tool
+    ethtool             # Ethernet device configuration
 
-    # networking tools
-    mtr # A network diagnostic tool
-    iperf3
-    dnsutils  # `dig` + `nslookup`
-    ldns # replacement of `dig`, it provide the command `drill`
-    aria2 # A lightweight multi-protocol & multi-source command-line download utility
-    socat # replacement of openbsd-netcat
-    nmap # A utility for network discovery and security auditing
+    # Archives
+    zip                 # ZIP file compression utility
+    xz                  # XZ file compression utility
+    unzip               # ZIP file extraction utility
+    p7zip               # 7-Zip file archiver
 
-    # misc
-    which
-    tree
+    # Utilities
+    git                 # Version control system
+    ripgrep             # Recursively searches directories for a regex pattern
+    jq                  # Command-line JSON processor
+    yq-go               # YAML processor
+    eza                 # Modern replacement for 'ls'
+    fzf                 # Command-line fuzzy finder
+    which               # Utility to locate executables
+    tree                # Directory listing in a tree-like format
+    direnv              # Environment switcher for shell
+    betterbird          # Enhanced version of Mozilla Thunderbird email client
+    ansible             # Configuration management and automation tool
+    wireguard-tools     # Tools for the WireGuard VPN
+    yubikey-manager-qt  # Manager for YubiKey hardware authentication devices
+    deluge-gtk          # BitTorrent client with GTK interface
+    tldr                # Simplified and community-driven man pages
+    flameshot           # Screenshot tool
+    obsidian            # Markdown-based note-taking app
+    wezterm             # GPU-accelerated terminal emulator
+    neovim              # Advanced text editor
 
-    # nix related
-    #
-    # it provides the command `nom` works just like `nix`
-    # with more details log output
-    nix-output-monitor
+    # Virtualization
+    virt-manager        # Virtual machine manager
+    libvirt             # Toolkit for managing virtualization platforms
+    virt-viewer         # Viewer for SPICE and VNC virtualized desktops
+    OVMFFull            # UEFI firmware for virtual machines
+    virtiofsd           # Virtio Filesystem daemon
 
-    btop  # replacement of htop/nmon
-    iotop # io monitoring
-    iftop # network monitoring
+    # Theme
+    (nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" ]; })  # Nerd Fonts with FiraCode and JetBrainsMono
 
-    # system call monitoring
-    strace # system call monitoring
-    ltrace # library call monitoring
-    lsof # list open files
+    # Communication
+    discord             # Communication app for voice, video, and text
+    caprine-bin         # Unofficial desktop client for Facebook Messenger
+    quassel             # Distributed IRC client
 
-    # system tools
-    sysstat
-    lm_sensors # for `sensors` command
-    ethtool
-    pciutils # lspci
-    usbutils # lsusb
+    # Media
+    spotify             # Music streaming service
+    mpv                 # Media player
+    plexamp             # Music player for Plex
+    plex-media-player   # Media player for Plex
+
+    # Gaming
+    lutris              # Gaming platform for Linux
+    xivlauncher         # Custom launcher for Final Fantasy XIV
   ];
+
+  xdg.configFile = {
+    "hypr/hyprland.conf".text = ''
+      # Hyprland configuration content
+      monitor = DisplayPort-1, 3840x1600@144, 0x0
+      exec-once = waybar
+    '';
+  };
 
   programs.git = {
     enable = true;
@@ -96,9 +130,13 @@
       aws.disabled = true;
       gcloud.disabled = true;
       line_break.disabled = true;
+    
+      character = {
+        success_symbol = "[➜](bold green)";
+        error_symbol = "[➜](bold red)";
+      };
     };
   };
-
   programs.alacritty = {
     enable = true;
     # custom settings
