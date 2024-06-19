@@ -66,10 +66,15 @@
       enable = false;
       xkb.layout = "se";
       xkb.options = "eurosign:e,caps:escape";
-      displayManager = {
-        gdm.enable = true;
-      };
+      # displayManager = {
+      #   gdm.enable = true;
+      # };
     };
+
+    wayland.enable = true;
+    dbus.enable = true;
+    logind.enable = true;
+    polkit.enable = true;
 
     openssh.enable = true;
 
@@ -102,7 +107,7 @@
 
   users.users.fredrik = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" "networkmanager" "video" "audio" ];
     openssh.authorizedKeys.keys = [
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDPZWRBkupqQeWbky3ykU1+QkWzFO6n2MFTdDS2H3JLItm1dzTNZ1erl9TBcqI1OvBBZkitles1R4ktH83GtncC/7hC1FEVX5U4uaxkxorAszmdn10f4bkeWdUtrHZEcLENN7gPbkvolLFvt8rNfnVIp5GhUFvS8Xl3KN2tLX+N+07LJpC36ASccXOeFvKBwvgXOKdJ8/OO3NcaMRWOahXwe1eWdQedO6QFLGtX/iRmA875osp7BkiV+MEb04a43GhqwWmebLaANSphi6mlnC2/3BT8E4knPxpOD7KbRz/1KYGKpsWQoQBNxWjy8WjX/LOVEM4WzeQCWVVIgjSHOK1WbeA6mMsqLqTDDUz9nR8nHm7HDRh5cFplL7dE7XtzmrsFDq30B3wA6WmwF5PWmjvwq2ggy9Nnpnfwv99jBkB4geFj9/pk4bwIIHPDdIt1mApp5iomoDQynN4OZ7wNuthPARfLEWqghNPdNjo6xwtAUSUBu8mTrkPfCJEIqgkYMFH5amRTyo+MHfoHYQM++/ELLLYlEj4YQn2yMqvwd43GH9qIWiXWtg/VbnaMecBasNgJcPl+J0Ad+gYL9FLO1h2sMlLIjFSdl6a+eQsTFHiASnTUta2rq6vF9CiMG40cjh8OdcKJzftP9tETD4Jvo6AyYc2KS/yp2AmRZUd7mVtFXw== fredrik"
     ];
